@@ -1,7 +1,9 @@
 const express = require('express');
+const path = require('path');
 
 function setUpStaticFiles(app) {
-    app.use(express.static('public'));
+    console.log(path.normalize(path.join(__dirname, '../public')));
+    app.use(express.static(path.normalize(path.join(__dirname, '../public'))));
 }
 
 

@@ -2,20 +2,6 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
 const userSchema = new mongoose.Schema({
-    firstName: {
-        type: String,
-        required: true,
-        minlength: [3, 'First name length must be at least 3 characters'],
-        validate: [/[a-z]+/, 'First name can include only english letters.']
-    },
-
-    lastName: {
-        type: String,
-        required: true,
-        minlength: [3, 'First name length must be at least 3 characters'],
-        validate: [/[a-z]+/, 'First name can include only english letters.']
-    },
-
     email: {
         type: String,
         required: true,
@@ -24,13 +10,19 @@ const userSchema = new mongoose.Schema({
 
     password: {
         type: String,
-        require: true,
+        required: true,
         minlength: [4, 'Password should be at least 4 characters.']
     },
 
-    myPosts: [{
+    gender: {
+        type: String,
+        required: true,
+        enum: ['male', 'female'],
+    },
+
+    tripsHistory: [{
         type: mongoose.Types.ObjectId,
-        ref: 'Post',
+        ref: 'Trip',
     }]
 })
 

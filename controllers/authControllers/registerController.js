@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const auth = require('../../services/authServices');
 const {TOKEN_COOKIE_NAME} = require('../../constants');
+const createErrorMessage = require('../../utils/errorMessage');
 
 router.get('/', (req, res) => {
     if (req.user) {
@@ -11,11 +12,11 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-    const { firstName, lastName, email, password, repeatPassword } = req.body;
+    const { email, password, repeatPassword, gender} = req.body;
 
     try {
 
-        let user = await auth.register(firstName, lastName, email, password, repeatPassword);
+        let user = await auth.register(email, password, repeatPassword, gender);
         let token = await auth.createToken(user);
 
         res.cookie(TOKEN_COOKIE_NAME, token, {
@@ -25,8 +26,8 @@ router.post('/', async (req, res) => {
         return res.redirect('/')
 
     } catch (error) {
-
-        res.render('register', {error: error.message})
+        let errorMessages = createErrorMessage(Object.keys(error.errors));
+        res.render('register', {errorMessages})
     }
 
 })

@@ -3,12 +3,13 @@ const bcrypt = require('bcrypt');
 const {SECRET} = require('../constants');
 const { jwtSign } = require('../utils/jwtUtils');
 
-async function register(firstName, lastName, email, password, repeatPassword) {
+
+async function register(email, password, repeatPassword, gender) {
     if (!password === repeatPassword) {
         throw new Error('Passwords must match.');
     };
 
-    let user = new User({firstName, lastName, email, password});
+    let user = new User({email, password, gender});
 
     return user.save()
 }

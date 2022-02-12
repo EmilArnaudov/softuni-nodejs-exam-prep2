@@ -1,4 +1,4 @@
-const routes = require('./routes');
+const routes = require('../routes');
 
 function applyRoutes(app) {
     app.use(routes);

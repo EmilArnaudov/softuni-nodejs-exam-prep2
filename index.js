@@ -7,6 +7,7 @@ const app = require('express')();
 require('./config/express-parsers')(app);
 require('./config/express-static')(app);
 require('./config/express-viewEngine')(app);
+require('./config/express-customMiddlewares')(app);
 require('./config/express-routes')(app);
 
 
