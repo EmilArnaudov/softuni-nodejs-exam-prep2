@@ -14,6 +14,7 @@ async function authenticate(req, res, next) {
 
         let verifiedToken = await jwtVerify(token, SECRET);
         req.user = verifiedToken;
+        res.locals.user = verifiedToken;
         return next();
 
     } catch (error) {
