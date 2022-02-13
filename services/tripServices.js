@@ -16,20 +16,21 @@ async function getTripDetails(tripId, userId, userEmail) {
         throw new Error('Trip does not exist.');
     }
 
-    trip.canJoin = true;
+    if (userId) {
+        trip.canJoin = true;
+    
+        if (trip.creator.toString() === userId) {
+            trip.isOwner = true;
+        }
+    }
 
     if (trip.buddies.length > 0) {
         let buddies = await User.find({_id: {$in: trip.buddies}}).lean();
         let buddiesEmails = buddies.map(x => x.email);
 
-        console.log(userEmail);
         trip.canJoin = !buddiesEmails.includes(userEmail);
 
         trip.buddiesEmails = buddiesEmails.join(', ');
-    }
-
-    if (trip.creator.toString() === userId) {
-        trip.isOwner = true;
     }
 
     trip.availableSeats = trip.seats - trip.buddies.length;

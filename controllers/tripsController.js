@@ -32,8 +32,13 @@ router.post('/offer', async (req, res) => {
 
 router.get('/details/:id', async (req, res) => {
     let tripId = req.params.id;
-    let userId = req.user._id;
-    let userEmail = req.user.email;
+    let userId;
+    let userEmail;
+    if (req.user) {
+        userId = req.user._id;
+        userEmail = req.user.email;    
+    }
+    
 
     try {
         let trip = await getTripDetails(tripId, userId, userEmail);
