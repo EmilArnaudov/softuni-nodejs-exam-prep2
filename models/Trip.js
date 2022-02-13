@@ -7,7 +7,7 @@ const tripSchema = new mongoose.Schema({
         minlength: [4, 'Starting point should be at least 4 characters long']
     },
 
-    endingPoint: {
+    endPoint: {
         type: String,
         required: true,
         minlength: [4, 'Starting point should be at least 4 characters long.']
@@ -68,3 +68,7 @@ const tripSchema = new mongoose.Schema({
     ]
 
 })
+
+const Trip = mongoose.model('Trip', tripSchema);
+
+module.exports = Trip;
