@@ -2,6 +2,7 @@ const router = require('express').Router();
 const Trip = require('../models/Trip');
 const { createTrip } = require('../services/tripServices');
 const { getTripDetails } = require('../services/tripServices');
+const { joinTrip } = require('../services/tripServices');
 const createErrorMessage = require('../utils/errorMessage');
 
 router.get('/shared', async (req, res) => {
@@ -50,9 +51,11 @@ router.get('/join/:id', async (req, res) => {
     let userId = req.user._id;
 
     try {
-        
+        let trip = await joinTrip(tripId, userId);
+        return res.render('trip-details', { trip });
+
     } catch (error) {
-        
+        return res.status(404).render('404');
     }
 })
 

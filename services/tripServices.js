@@ -40,7 +40,22 @@ async function getTripDetails(tripId, userId, userEmail) {
     return trip;
 }
 
+
+async function joinTrip(tripId, userId) {
+    let trip = await Trip.findById(tripId).lean();
+
+    if (!trip) {
+        throw new Error('Trip does not exist.')
+    }
+
+    trip.buddies.push(userId);
+
+    return trip.save();
+}
+
+
 module.exports = {
     createTrip,
     getTripDetails,
+    joinTrip,
 }
