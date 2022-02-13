@@ -52,11 +52,22 @@ async function joinTrip(tripId, userId) {
     trip.buddies.push(userId);
 
     return trip.save();
+};
+
+async function deleteTrip(tripId) {
+    return Trip.findByIdAndDelete(tripId)
 }
 
-
+async function editTrip(tripId, tripData) {
+    const { startPoint, endPoint, date, time, carImage, carBrand, seats, price, description } = tripData;
+    return Trip.findOneAndUpdate({_id: tripId}, {startPoint: startPoint, endPoint: endPoint, date: date, time: time, carImage: carImage, carBrand: carBrand, seats: seats, price: price, description: description}, {runValidators: true});
+    
+}
+ 
 module.exports = {
     createTrip,
     getTripDetails,
     joinTrip,
+    deleteTrip,
+    editTrip,
 }

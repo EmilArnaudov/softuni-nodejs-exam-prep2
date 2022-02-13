@@ -35,6 +35,7 @@ async function createToken(user) {
     let payload = {
         _id: user._id,
         email: user.email,
+        gender: user.gender,
     }
 
     return jwtSign(payload, SECRET);
