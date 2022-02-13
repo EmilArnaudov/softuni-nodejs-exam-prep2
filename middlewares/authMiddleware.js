@@ -17,7 +17,6 @@ async function authenticate(req, res, next) {
         return next();
 
     } catch (error) {
-
         return res.status(401).redirect('/login');
     }
 }

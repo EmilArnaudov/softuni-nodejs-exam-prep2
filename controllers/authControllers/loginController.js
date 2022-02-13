@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const auth = require('../../services/authServices');
 const {TOKEN_COOKIE_NAME} = require('../../constants');
+const createErrorMessage = require('../../utils/errorMessage');
 
 router.get('/', (req, res) => {
     if (req.user) {
@@ -28,7 +29,8 @@ router.post('/', async (req, res) => {
         return res.redirect('/');
         
     } catch (error) {
-        return res.render('login', {error: error.message})
+        let errorMessage = error.message; 
+        return res.render('login', {errorMessages: [{errorMessage}]});
     }
 })
 

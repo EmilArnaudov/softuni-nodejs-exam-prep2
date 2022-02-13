@@ -17,6 +17,10 @@ async function register(email, password, repeatPassword, gender) {
 async function login(email, password) {
     let user = await User.findOne({email: email}).lean();
 
+    if (!user) {
+        throw new Error('Email or password incorrect.')
+    }
+
     let passwordCorrect = await bcrypt.compare(password, user.password);
 
     if (passwordCorrect) {
@@ -29,9 +33,7 @@ async function login(email, password) {
 
 async function createToken(user) {
     let payload = {
-        id: user._id,
-        firstName: user.firstName,
-        lastName: user.lastName,
+        _id: user._id,
         email: user.email,
     }
 
